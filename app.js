@@ -48,7 +48,7 @@ const store = MongoStore.create({
     touchAfter:24 * 3600,
 });
 
-store.on("error",()=>{
+store.on("error",(err)=>{
     console.log("ERORR IN MONGO SESSION STORE", err);
 });
 
@@ -66,9 +66,7 @@ const sessionOptions ={
 
 
 
-// app.get("/",(req,res)=>{
-//     res.send("i am root path");
-// });
+
 
 app.use(session(sessionOptions));
 app.use(flash());
@@ -91,6 +89,10 @@ app.use((req,res,next)=>{
      res.locals.currUser=req.user;
     next();;
  
+});
+
+app.get("/",(req,res)=>{
+    res.redirect("/listings");
 });
 
 
